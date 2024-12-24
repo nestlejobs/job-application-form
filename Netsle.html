@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Application - Ads Specialist</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f6f1;
+            color: #5b5b5b;
+        }
+        .header {
+            background-color: #ffffff;
+            border-bottom: 1px solid #ddd;
+            padding: 20px;
+            text-align: center;
+        }
+        .header img {
+            max-width: 200px;
+            margin-bottom: 10px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+        h1, h2 {
+            color: #373737;
+            text-align: center;
+        }
+        h1 {
+            font-size: 32px;
+            margin-bottom: 25px;
+        }
+        h2 {
+            font-size: 26px;
+            margin-bottom: 20px;
+        }
+        .job-info p {
+            font-size: 18px;
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+        .apply-section {
+            margin-top: 40px;
+        }
+        form input, form textarea {
+            width: 100%;
+            padding: 14px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        .instructions {
+            background-color: #f3f3f3;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 48%;
+        }
+        button img {
+            width: 24px;
+            height: 24px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="https://www.nestle.com.vn/themes/custom/da_vinci_code/logo.svg" alt="Company Logo">
+        <h1>Recruitment - Ads Specialist</h1>
+    </div>
+
+    <div class="container">
+        <div class="job-info">
+            <h2>Job Description</h2>
+            <p><strong>Position:</strong> Ads Specialist (Facebook, Google, TikTok)</p>
+            <p><strong>Location:</strong> Remote</p>
+            <p><strong>Salary:</strong> Competitive, based on experience</p>
+            <p>We are seeking a skilled Ads Specialist to join our dynamic team. The ideal candidate will plan, execute, and optimize online advertising campaigns across multiple platforms, driving growth and engagement.</p>
+        </div>
+
+        <div class="apply-section">
+            <h2>How to Apply</h2>
+            <div class="instructions">
+                <p><strong>Step 1:</strong> Fill in the application form below with accurate details.</p>
+                <p><strong>Step 2:</strong> Submit your application by clicking on one of the buttons (Gmail or Email).</p>
+                <p><strong>Step 3:</strong> Wait for our confirmation email within 24 hours. If you do not receive a response, feel free to contact us for updates.</p>
+            </div>
+
+            <form id="applyForm">
+                <input type="text" id="fullName" placeholder="Full Name *" required>
+                <input type="text" id="contact" placeholder="Contact *" required>
+                <input type="text" id="timeZone" placeholder="Time Zone *" required>
+                <input type="text" id="phone" placeholder="Phone *" required>
+                <input type="text" id="workingHours" placeholder="Preferred Working Hours *" required>
+                <input type="url" id="linkedin" placeholder="LinkedIn Profile or Website *" required>
+                <textarea id="introduction" placeholder="Introduction *" required></textarea>
+                <input type="url" id="cvLink" placeholder="Google Drive Link to Curriculum Vitae (CV)" onblur="checkCVLink(this)" required>
+            </form>
+
+            <div class="button-container">
+                <button type="button" onclick="submitViaEmail()">
+                    <img src="https://s31799.pcdn.co/wp-content/uploads/2021/08/email-icon.png" alt="Email Icon"> Submit via Email
+                </button>
+                <button type="button" onclick="submitViaGmail()">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Gmail"> Submit via Gmail
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function formatFieldLabel(label) {
+            return label.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase()).trim();
+        }
+
+        function checkCVLink(input) {
+            if (!input.value.trim()) {
+                input.value = "";
+            }
+        }
+
+        function gatherFormData() {
+            const fields = ["fullName", "contact", "timeZone", "phone", "workingHours", "linkedin", "introduction", "cvLink"];
+            const data = {};
+
+            fields.forEach(field => {
+                const value = document.getElementById(field).value;
+                data[formatFieldLabel(field)] = value;
+            });
+
+            return data;
+        }
+
+        function generateMailToLink(subject, body, email = "recruitment@company.com") {
+            return `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        }
+
+        function submitViaGmail() {
+            const formData = gatherFormData();
+            const subject = `${formData["Full Name"]} - Ads Specialist Application`;
+            const body = Object.entries(formData)
+                .map(([key, value]) => `${key === 'Cv Link' ? 'CURRICULUM VITAE (CV)' : key.toUpperCase()}: ${value}`)
+                .join("\n\n");
+
+            const mailtoLink = `https://mail.google.com/mail/u/0/?fs=1&to=recruitment@company.com&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}&tf=cm`;
+            window.open(mailtoLink, '_blank');
+        }
+
+        function submitViaEmail() {
+            const formData = gatherFormData();
+            const subject = `${formData["Full Name"]} - Ads Specialist Application`;
+            const body = Object.entries(formData)
+                .map(([key, value]) => `${key === 'Cv Link' ? 'CURRICULUM VITAE (CV)' : key.toUpperCase()}: ${value}`)
+                .join("\n\n");
+
+            const mailtoLink = generateMailToLink(subject, body);
+            window.location.href = mailtoLink;
+        }
+    </script>
+</body>
+</html>
